@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>레트로 뽑기판</title>
+  <style>
+    body {
+      background: #f8f4ec;
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 30px;
+    }
+
+    h1 {
+      color: #5e3023;
+      margin-bottom: 20px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(20, 30px);
+      grid-template-rows: repeat(15, 30px);
+      gap: 4px;
+    }
+
+    .cell {
+      width: 30px;
+      height: 30px;
+      border: 2px solid #333;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 10px;
+      color: white;
+      font-weight: bold;
+      border-radius: 4px;
+    }
+  </style>
+</head>
+<body>
+  <h1>🎰 추억의 뽑기판 🎰</h1>
+  <div class="grid" id="gachaBoard"></div>
+
+  <script>
+    const board = document.getElementById('gachaBoard');
+    const colors = ['#b7410e', '#f57c00', '#1e3a8a', '#006d5b', '#a29bfe', '#f78fb3', '#ffeaa7'];
+
+    const prizes = [];
+    prizes.push(...Array(10).fill('1'));
+    prizes.push(...Array(30).fill('2'));
+    prizes.push(...Array(40).fill('3'));
+    prizes.push(...Array(80).fill('4'));
+    prizes.push(...Array(120).fill('5'));
+    
+    for (let i = prizes.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [prizes[i], prizes[j]] = [prizes[j], prizes[i]];
+    }
+
+    prizes.forEach((val, idx) => {
+      const cell = document.createElement('div');
+      cell.classList.add('cell');
+      cell.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      cell.innerText = val;
+      board.appendChild(cell);
+    });
+  </script>
+</body>
+</html>
